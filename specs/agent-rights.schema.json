@@ -1,0 +1,155 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:caios:schema:agent-rights:v0.1",
+  "title": "Constitutional AI OS Rights and Capability Rules",
+  "$defs": {
+    "rightRule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "subject",
+        "action",
+        "resource",
+        "effect",
+        "authority",
+        "class"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "subject": {
+          "type": "string",
+          "minLength": 1
+        },
+        "action": {
+          "type": "string",
+          "minLength": 1
+        },
+        "resource": {
+          "type": "string",
+          "minLength": 1
+        },
+        "effect": {
+          "enum": [
+            "allow",
+            "deny",
+            "require",
+            "escalate"
+          ]
+        },
+        "authority": {
+          "type": "string",
+          "minLength": 1
+        },
+        "class": {
+          "enum": [
+            "enforceable",
+            "auditable",
+            "aspirational"
+          ]
+        },
+        "conditions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "requirements": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "justification": {
+          "type": "string"
+        },
+        "appeal_to": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "priority": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "delegation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "delegator",
+        "delegate",
+        "capabilities",
+        "scope",
+        "revocable"
+      ],
+      "properties": {
+        "delegator": {
+          "type": "string"
+        },
+        "delegate": {
+          "type": "string"
+        },
+        "capabilities": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1
+        },
+        "scope": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1
+        },
+        "expires_at": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "revocable": {
+          "type": "boolean"
+        },
+        "parent_delegation": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    }
+  },
+  "type": "object",
+  "required": [
+    "constitution_id",
+    "rights"
+  ],
+  "properties": {
+    "constitution_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "rights": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/rightRule"
+      }
+    },
+    "delegations": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/delegation"
+      }
+    }
+  },
+  "additionalProperties": false
+}
