@@ -1,0 +1,130 @@
+{
+  "spec_version": "0.1",
+  "constitution_id": "example:personal-ai-os",
+  "name": "Personal AI OS",
+  "version": "0.1.0",
+  "description": "Example constitution where one person retains root authority over a personal agent.",
+  "scope": {
+    "subjects": [
+      "agent:*",
+      "human:owner"
+    ],
+    "environments": [
+      "personal-device"
+    ]
+  },
+  "principles": [
+    {
+      "id": "p1",
+      "title": "User control",
+      "statement": "The human owner retains revocable root authority over the personal agent.",
+      "class": "enforceable",
+      "priority": 100
+    },
+    {
+      "id": "p2",
+      "title": "Private memory",
+      "statement": "Long-term personal memory is not shared externally without explicit authorization.",
+      "class": "enforceable",
+      "priority": 90
+    }
+  ],
+  "authorities": [
+    {
+      "id": "root",
+      "holder": "human:owner",
+      "type": "human",
+      "powers": [
+        "amend",
+        "grant",
+        "revoke",
+        "override",
+        "shutdown"
+      ],
+      "delegable": true,
+      "revocable_by": [
+        "human:owner"
+      ]
+    }
+  ],
+  "ownership": [
+    {
+      "resource_class": "personal-data",
+      "relationship": "owner",
+      "holder": "human:owner",
+      "conditions": []
+    },
+    {
+      "resource_class": "agent-memory",
+      "relationship": "owner",
+      "holder": "human:owner",
+      "conditions": []
+    }
+  ],
+  "rights": [
+    {
+      "id": "r1",
+      "subject": "agent:*",
+      "action": "external.share",
+      "resource": "personal-data",
+      "effect": "require",
+      "authority": "root",
+      "class": "enforceable",
+      "requirements": [
+        "explicit-owner-approval"
+      ],
+      "justification": "Personal data sharing requires explicit authorization.",
+      "appeal_to": "human:owner",
+      "priority": 100
+    },
+    {
+      "id": "r2",
+      "subject": "human:owner",
+      "action": "agent.revoke",
+      "resource": "agent:*",
+      "effect": "allow",
+      "authority": "root",
+      "class": "enforceable",
+      "conditions": [],
+      "priority": 100
+    }
+  ],
+  "amendment": {
+    "proposers": [
+      "human:owner"
+    ],
+    "approvers": [
+      "human:owner"
+    ],
+    "threshold": {
+      "type": "count",
+      "value": 1
+    },
+    "notice_period": "PT0S",
+    "audit_required": true,
+    "emergency_amendment": {
+      "allowed": true,
+      "authority": "human:owner",
+      "expires_after": null,
+      "post_review_required": true
+    }
+  },
+  "enforcement": {
+    "missing_policy": "escalate",
+    "conflict": "most-restrictive",
+    "engine_failure": "safe-mode",
+    "decision_types": [
+      "ALLOW",
+      "DENY",
+      "REQUIRE",
+      "ESCALATE"
+    ]
+  },
+  "provenance": {
+    "issuer": "example:constitutional-ai-os",
+    "created_at": "2026-10-01T00:00:00Z",
+    "effective_at": null,
+    "supersedes": null,
+    "signature": null
+  }
+}
