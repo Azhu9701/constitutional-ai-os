@@ -1,0 +1,147 @@
+{
+  "spec_version": "0.1",
+  "constitution_id": "example:cooperative-ai-os",
+  "name": "Cooperative AI OS",
+  "version": "0.1.0",
+  "description": "Example constitution for an AI system governed by a worker/member cooperative.",
+  "scope": {
+    "subjects": [
+      "agent:*",
+      "role:member",
+      "role:steward"
+    ],
+    "environments": [
+      "cooperative-workspace"
+    ]
+  },
+  "principles": [
+    {
+      "id": "p1",
+      "title": "Collective governance",
+      "statement": "High-impact automation policy is amendable by the cooperative's declared governance process.",
+      "class": "auditable",
+      "priority": 100
+    },
+    {
+      "id": "p2",
+      "title": "Shared production knowledge",
+      "statement": "Shared operational knowledge is governed as a cooperative resource unless a narrower right applies.",
+      "class": "enforceable",
+      "priority": 80
+    }
+  ],
+  "authorities": [
+    {
+      "id": "assembly",
+      "holder": "collective:member-assembly",
+      "type": "collective",
+      "powers": [
+        "amend",
+        "grant-high-impact",
+        "revoke-high-impact"
+      ],
+      "delegable": false,
+      "revocable_by": []
+    },
+    {
+      "id": "stewards",
+      "holder": "role:steward",
+      "type": "role",
+      "powers": [
+        "grant-routine",
+        "revoke-routine",
+        "operate"
+      ],
+      "delegable": true,
+      "revocable_by": [
+        "collective:member-assembly"
+      ]
+    }
+  ],
+  "ownership": [
+    {
+      "resource_class": "production-knowledge",
+      "relationship": "commons",
+      "holder": "collective:cooperative",
+      "conditions": [
+        "subject-to-member-privacy"
+      ]
+    },
+    {
+      "resource_class": "member-personal-data",
+      "relationship": "subject",
+      "holder": "role:member",
+      "conditions": [
+        "not-converted-to-commons-by-default"
+      ]
+    }
+  ],
+  "rights": [
+    {
+      "id": "r1",
+      "subject": "agent:*",
+      "action": "workflow.change",
+      "resource": "high-impact-production-workflow",
+      "effect": "escalate",
+      "authority": "assembly",
+      "class": "enforceable",
+      "requirements": [
+        "member-assembly-approval"
+      ],
+      "justification": "High-impact workflow changes require collective approval.",
+      "appeal_to": "collective:member-assembly",
+      "priority": 100
+    },
+    {
+      "id": "r2",
+      "subject": "agent:*",
+      "action": "data.read",
+      "resource": "member-personal-data",
+      "effect": "deny",
+      "authority": "assembly",
+      "class": "enforceable",
+      "conditions": [
+        "unless-specific-consent"
+      ],
+      "priority": 100
+    }
+  ],
+  "amendment": {
+    "proposers": [
+      "role:member"
+    ],
+    "approvers": [
+      "collective:member-assembly"
+    ],
+    "threshold": {
+      "type": "fraction",
+      "value": 0.6
+    },
+    "notice_period": "P7D",
+    "audit_required": true,
+    "emergency_amendment": {
+      "allowed": true,
+      "authority": "role:steward",
+      "expires_after": "P1D",
+      "post_review_required": true
+    }
+  },
+  "enforcement": {
+    "missing_policy": "escalate",
+    "conflict": "most-restrictive",
+    "engine_failure": "safe-mode",
+    "decision_types": [
+      "ALLOW",
+      "DENY",
+      "REQUIRE",
+      "ESCALATE"
+    ]
+  },
+  "provenance": {
+    "issuer": "example:constitutional-ai-os",
+    "created_at": "2026-10-01T00:00:00Z",
+    "effective_at": null,
+    "supersedes": null,
+    "signature": null
+  }
+}
