@@ -100,7 +100,7 @@ principle
 | [ARCHITECTURE.md](ARCHITECTURE.md) | Reference architecture and trust boundaries |
 | [GOVERNANCE.md](GOVERNANCE.md) | How this open project changes |
 | [ROADMAP.md](ROADMAP.md) | From written principles to executable runtime |
-| [CONTRIBUTING.md](CONTRIBUTING.md) | How to participate |
+| [CONTRIBUTING.md](CONTRIBUTING.md) | How to participate |\n| [GLOSSARY.md](GLOSSARY.md) | Shared vocabulary |\n| [THREAT-MODEL.md](THREAT-MODEL.md) | Initial security and governance threat model |
 | [docs/](docs/) | Explanations of each layer |
 | [specs/](specs/) | Machine-readable schemas |
 | [rfcs/](rfcs/) | Proposals for major design changes |
@@ -119,7 +119,7 @@ v0.1 focuses on:
 - an architecture for runtime enforcement;
 - example constitutions for personal, cooperative, and factory contexts.
 
-## What this project is not
+## Next work\n\nThe first implementation backlog is public:\n\n- [#1 Reference policy evaluator](https://github.com/Azhu9701/constitutional-ai-os/issues/1)\n- [#2 Principal identity, delegation, expiry, and revocation](https://github.com/Azhu9701/constitutional-ai-os/issues/2)\n- [#3 Executable constitutional bypass tests](https://github.com/Azhu9701/constitutional-ai-os/issues/3)\n- [#4 Tool and agent protocol interoperability](https://github.com/Azhu9701/constitutional-ai-os/issues/4)\n- [#5 Physical production and robotics profile](https://github.com/Azhu9701/constitutional-ai-os/issues/5)\n\n## What this project is not
 
 It is not:
 
