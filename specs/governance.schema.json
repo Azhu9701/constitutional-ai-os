@@ -1,0 +1,107 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:caios:schema:governance:v0.1",
+  "title": "Constitutional AI OS Governance",
+  "$defs": {
+    "amendmentProcedure": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "proposers",
+        "approvers",
+        "threshold",
+        "audit_required",
+        "emergency_amendment"
+      ],
+      "properties": {
+        "proposers": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1
+        },
+        "approvers": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1
+        },
+        "threshold": {
+          "type": "object",
+          "required": [
+            "type",
+            "value"
+          ],
+          "properties": {
+            "type": {
+              "enum": [
+                "count",
+                "fraction",
+                "consensus",
+                "external-law"
+              ]
+            },
+            "value": {
+              "type": [
+                "number",
+                "string"
+              ]
+            }
+          },
+          "additionalProperties": false
+        },
+        "notice_period": {
+          "type": "string",
+          "description": "ISO 8601 duration or human-readable bootstrap value"
+        },
+        "audit_required": {
+          "type": "boolean"
+        },
+        "emergency_amendment": {
+          "type": "object",
+          "required": [
+            "allowed"
+          ],
+          "properties": {
+            "allowed": {
+              "type": "boolean"
+            },
+            "authority": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "expires_after": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "post_review_required": {
+              "type": "boolean",
+              "default": true
+            }
+          },
+          "additionalProperties": false
+        }
+      }
+    }
+  },
+  "type": "object",
+  "required": [
+    "constitution_id",
+    "amendment"
+  ],
+  "properties": {
+    "constitution_id": {
+      "type": "string"
+    },
+    "amendment": {
+      "$ref": "#/$defs/amendmentProcedure"
+    }
+  },
+  "additionalProperties": false
+}
