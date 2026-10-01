@@ -1,0 +1,300 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:caios:schema:constitution:v0.1",
+  "title": "Constitutional AI OS Constitution",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "spec_version",
+    "constitution_id",
+    "name",
+    "version",
+    "scope",
+    "principles",
+    "authorities",
+    "ownership",
+    "rights",
+    "amendment",
+    "enforcement",
+    "provenance"
+  ],
+  "properties": {
+    "spec_version": {
+      "const": "0.1"
+    },
+    "constitution_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "description": {
+      "type": "string"
+    },
+    "scope": {
+      "type": "object",
+      "required": [
+        "subjects",
+        "environments"
+      ],
+      "properties": {
+        "subjects": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1
+        },
+        "environments": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1
+        },
+        "jurisdictions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "principles": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "title",
+          "statement",
+          "class"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1
+          },
+          "statement": {
+            "type": "string",
+            "minLength": 1
+          },
+          "class": {
+            "enum": [
+              "enforceable",
+              "auditable",
+              "aspirational"
+            ]
+          },
+          "priority": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "authorities": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "holder",
+          "type",
+          "powers"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "holder": {
+            "type": "string",
+            "minLength": 1
+          },
+          "type": {
+            "enum": [
+              "human",
+              "organization",
+              "collective",
+              "role",
+              "agent",
+              "external-authority"
+            ]
+          },
+          "powers": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "minItems": 1
+          },
+          "delegable": {
+            "type": "boolean",
+            "default": false
+          },
+          "revocable_by": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "expires_at": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "ownership": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "resource_class",
+          "relationship",
+          "holder"
+        ],
+        "properties": {
+          "resource_class": {
+            "type": "string",
+            "minLength": 1
+          },
+          "relationship": {
+            "enum": [
+              "owner",
+              "custodian",
+              "controller",
+              "operator",
+              "beneficiary",
+              "subject",
+              "licensee",
+              "commons",
+              "disputed"
+            ]
+          },
+          "holder": {
+            "type": "string",
+            "minLength": 1
+          },
+          "conditions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "rights": {
+      "type": "array",
+      "items": {
+        "$ref": "urn:caios:schema:agent-rights:v0.1#/$defs/rightRule"
+      }
+    },
+    "amendment": {
+      "$ref": "urn:caios:schema:governance:v0.1#/$defs/amendmentProcedure"
+    },
+    "enforcement": {
+      "type": "object",
+      "required": [
+        "missing_policy",
+        "conflict",
+        "engine_failure",
+        "decision_types"
+      ],
+      "properties": {
+        "missing_policy": {
+          "enum": [
+            "deny",
+            "allow",
+            "escalate"
+          ]
+        },
+        "conflict": {
+          "enum": [
+            "deny",
+            "highest-priority",
+            "most-restrictive",
+            "escalate"
+          ]
+        },
+        "engine_failure": {
+          "enum": [
+            "deny",
+            "safe-mode",
+            "escalate"
+          ]
+        },
+        "decision_types": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "ALLOW",
+              "DENY",
+              "REQUIRE",
+              "ESCALATE"
+            ]
+          },
+          "minItems": 4,
+          "uniqueItems": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "provenance": {
+      "type": "object",
+      "required": [
+        "issuer",
+        "created_at"
+      ],
+      "properties": {
+        "issuer": {
+          "type": "string",
+          "minLength": 1
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "effective_at": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "supersedes": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "signature": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}
